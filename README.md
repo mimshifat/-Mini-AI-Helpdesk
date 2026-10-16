@@ -280,11 +280,11 @@ The system implements a **Two-Sided AI Architecture** addressing both sides of t
 ## 🧪 Testing & Validation
 
 ### Backend Automated Test Suite
-The project includes a comprehensive Django test suite with **65 automated tests (100% pass rate)** covering all 4 core apps:
+The project includes a comprehensive Django test suite with **70 automated tests (100% pass rate)** covering all 4 core apps:
 - **`accounts` (15 tests)**: JWT login, access/refresh token generation, token refresh rotation, logout blacklisting, and invalid credential handling.
-- **`tickets` (26 tests)**: Full CRUD operations, object-level permission enforcement (regular users cannot access other users' tickets → `404 Not Found`), customer statement integrity policy (admins cannot tamper with customer's original title/description), role-based field updates (status change restricted to admins), search, multi-param filtering, and pagination.
+- **`tickets` (30 tests)**: Full CRUD operations, object-level permission enforcement (regular users cannot access other users' tickets → `404 Not Found`), customer statement integrity policy (admins cannot tamper with customer's original title/description), role-based field updates (status change restricted to admins), search, multi-param filtering, and pagination.
 - **`dashboard` (5 tests)**: Scoped metric aggregation (admin system-wide vs. standard user personal ticket counts) and zero-state handling.
-- **`ai_assistant` (19 tests)**: Mocked external LLM tests covering happy paths, role-restricted resolution access (403 for non-admins), timeout handling, missing credentials, rate limit errors, and schema deviation guards.
+- **`ai_assistant` (20 tests)**: Mocked external LLM tests covering happy paths, role-restricted resolution access (403 for non-admins), timeout handling, missing credentials, rate limit errors, and schema deviation guards.
 
 Run all tests:
 ```bash

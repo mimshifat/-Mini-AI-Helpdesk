@@ -16,7 +16,7 @@ Covers:
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
-from rest_framework.authtoken.models import Token
+from rest_framework_simplejwt.tokens import RefreshToken
 
 from accounts.models import User
 from tickets.models import Ticket
@@ -37,8 +37,8 @@ class TicketTestCase(APITestCase):
         )
 
     def _auth(self, user):
-        token, _ = Token.objects.get_or_create(user=user)
-        self.client.credentials(HTTP_AUTHORIZATION=f'Token {token.key}')
+        token = RefreshToken.for_user(user)
+        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {token.access_token}')
 
     def _make_ticket(self, creator=None, title='Test Ticket', status_val='Open', priority='Medium', category='General', description='Some description.'):
         return Ticket.objects.create(

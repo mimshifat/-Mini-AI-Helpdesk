@@ -29,7 +29,7 @@ from django.urls import reverse
 from django.test import override_settings
 from rest_framework import status
 from rest_framework.test import APITestCase
-from rest_framework.authtoken.models import Token
+from rest_framework_simplejwt.tokens import RefreshToken
 import requests
 
 from accounts.models import User
@@ -70,8 +70,8 @@ class AISuggestViewTests(APITestCase):
         self.user = User.objects.create_user(
             username='ai_tester', password='Pass@1', role=User.Role.USER
         )
-        token, _ = Token.objects.get_or_create(user=self.user)
-        self.client.credentials(HTTP_AUTHORIZATION=f'Token {token.key}')
+        token = RefreshToken.for_user(self.user)
+        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {token.access_token}')
         self.url = reverse('ai-suggest')
         self.valid_payload = {
             'title': 'Cannot login to my account',
@@ -254,8 +254,8 @@ class AIDraftResolutionViewTests(APITestCase):
         self.user = User.objects.create_user(
             username='resolution_agent', password='Pass@1', role=User.Role.ADMIN
         )
-        token, _ = Token.objects.get_or_create(user=self.user)
-        self.client.credentials(HTTP_AUTHORIZATION=f'Token {token.key}')
+        token = RefreshToken.for_user(self.user)
+        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {token.access_token}')
         self.url = reverse('ai-draft-resolution')
         self.payload = {
             'title': 'Production database latency spiking',
@@ -272,8 +272,8 @@ class AIDraftResolutionViewTests(APITestCase):
         regular_user = User.objects.create_user(
             username='regular_customer', password='Pass@1', role=User.Role.USER
         )
-        reg_token, _ = Token.objects.get_or_create(user=regular_user)
-        self.client.credentials(HTTP_AUTHORIZATION=f'Token {reg_token.key}')
+        reg_token = RefreshToken.for_user(regular_user)
+        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {reg_token.access_token}')
         response = self.client.post(self.url, self.payload, format='json')
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
         self.assertEqual(response.data['error'], 'permission_denied')
