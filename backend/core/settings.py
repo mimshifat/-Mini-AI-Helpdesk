@@ -28,6 +28,9 @@ ALLOWED_HOSTS = [
     for h in os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
     if h.strip()
 ]
+RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
 # ─── Application Definition ───────────────────────────────────────────────────
 INSTALLED_APPS = [
