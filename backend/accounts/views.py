@@ -27,6 +27,10 @@ class RegisterView(APIView):
 
     permission_classes = [AllowAny]
     authentication_classes = []
+    serializer_class = RegisterSerializer
+
+    def get(self, request):
+        return Response({'detail': 'Submit POST with username, email, and password to register.'})
 
     def post(self, request):
         serializer = RegisterSerializer(
@@ -63,6 +67,10 @@ class LoginView(APIView):
 
     permission_classes = [AllowAny]
     authentication_classes = []
+    serializer_class = LoginSerializer
+
+    def get(self, request):
+        return Response({'detail': 'Submit POST with username and password to log in.'})
 
     def post(self, request):
         serializer = LoginSerializer(
