@@ -2,8 +2,8 @@ name: Keep Render Backend Alive
 
 on:
   schedule:
-    # Run every 14 minutes (Render free tier sleeps after 15 minutes of inactivity)
-    - cron: '*/14 * * * *'
+    # Run every 10 minutes to keep Render backend active (Render free tier sleeps after 15 min)
+    - cron: '*/10 * * * *'
   workflow_dispatch: # Allows manual trigger anytime from GitHub Actions tab
 
 jobs:
@@ -15,5 +15,28 @@ jobs:
         run: |
           TARGET_URL="${{ secrets.RENDER_BACKEND_URL || vars.RENDER_BACKEND_URL || 'https://mini-ai-helpdesk.onrender.com/health/' }}"
           echo "Pinging backend at: $TARGET_URL"
-          RESPONSE=$(curl -s -w "\nHTTP_STATUS:%{http_code}\n" --max-time 30 "$TARGET_URL")
-          echo "$RESPONSE"
+          
+          # Render free tier instances take 45-75s to wake up on cold start.
+          # Allow up to 120s with automatic retries to prevent curl exit code 28 (timeout).
+          HTTP_STATUS=$(curl -s -S -o /tmp/health_response.json -w "%{http_code}" \
+            --connect-timeout 30 \
+            --max-time 120 \
+            --retry 3 \
+            --retry-delay 10 \
+            --retry-all-errors \
+            "$TARGET_URL" || echo "FAILED")
+
+          echo "HTTP Status Code: $HTTP_STATUS"
+          if [ -f /tmp/health_response.json ]; then
+            echo "Response Body:"
+            cat /tmp/health_response.json
+            echo ""
+          fi
+
+          if [ "$HTTP_STATUS" -ge 200 ] && [ "$HTTP_STATUS" -lt 400 ]; then
+            echo "Backend is active and healthy."
+            exit 0
+          else
+            echo "Unexpected HTTP status: $HTTP_STATUS"
+            exit 1
+          fi
