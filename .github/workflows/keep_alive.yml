@@ -2,8 +2,9 @@ name: Keep Render Backend Alive
 
 on:
   schedule:
-    # Run every 10 minutes to keep Render backend active (Render free tier sleeps after 15 min)
-    - cron: '*/10 * * * *'
+    # Run every 10 minutes at off-peak minute offsets (7, 17, 27, 37, 47, 57)
+    # Using an offset prevents GitHub's scheduler from dropping/delaying jobs during top-of-the-hour (:00, :10, :20...) congestion
+    - cron: '7,17,27,37,47,57 * * * *'
   workflow_dispatch: # Allows manual trigger anytime from GitHub Actions tab
 
 jobs:
