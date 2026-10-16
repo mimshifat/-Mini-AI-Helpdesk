@@ -8,6 +8,7 @@ No secrets are hardcoded. Production security flags activate when DEBUG=False.
 import os
 from datetime import timedelta
 from pathlib import Path
+import dj_database_url
 from dotenv import load_dotenv
 
 # ─── Paths ────────────────────────────────────────────────────────────────────
@@ -83,21 +84,32 @@ TEMPLATES = [
 WSGI_APPLICATION = 'core.wsgi.application'
 
 # ─── Database ─────────────────────────────────────────────────────────────────
-# All values required in .env — no silent fallbacks for DB credentials
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ['DB_NAME'],
-        'USER': os.environ['DB_USER'],
-        'PASSWORD': os.environ['DB_PASSWORD'],
-        'HOST': os.environ.get('DB_HOST', 'localhost'),
-        'PORT': os.environ.get('DB_PORT', '5432'),
-        'OPTIONS': {
-            'connect_timeout': 10,
-        },
-        'CONN_MAX_AGE': 60,  # persistent connections
+# Accepts DATABASE_URL (e.g. Neon, Supabase, Heroku postgresql://...)
+# or individual DB_* environment variables.
+if os.environ.get('DATABASE_URL'):
+    DATABASES = {
+        'default': dj_database_url.config(
+            env='DATABASE_URL',
+            conn_max_age=60,
+            conn_health_checks=True,
+        )
     }
-}
+    DATABASES['default'].setdefault('OPTIONS', {})['connect_timeout'] = 10
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.environ.get('DB_NAME', 'helpdesk_db'),
+            'USER': os.environ.get('DB_USER', 'postgres'),
+            'PASSWORD': os.environ.get('DB_PASSWORD', ''),
+            'HOST': os.environ.get('DB_HOST', 'localhost'),
+            'PORT': os.environ.get('DB_PORT', '5432'),
+            'OPTIONS': {
+                'connect_timeout': 10,
+            },
+            'CONN_MAX_AGE': 60,  # persistent connections
+        }
+    }
 
 # ─── Auth ─────────────────────────────────────────────────────────────────────
 AUTH_USER_MODEL = 'accounts.User'

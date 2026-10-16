@@ -1,6 +1,6 @@
 # Mini AI Helpdesk
 
-A clean, modern, and reliable Full-Stack Support & Ticket Management system with built-in AI Copilot triage capabilities. Built with **React 19**, **Tailwind CSS**, **Axios**, **Django REST Framework (DRF)**, **SimpleJWT**, and **PostgreSQL** (with zero-config SQLite development fallback).
+A clean, modern, and reliable Full-Stack Support & Ticket Management system with built-in AI Copilot triage capabilities. Built with **React 19**, **Tailwind CSS**, **Axios**, **Django REST Framework (DRF)**, **SimpleJWT**, and **PostgreSQL** (with cloud `DATABASE_URL` support for Neon, Supabase, Render, etc.).
 
 ---
 
@@ -40,8 +40,8 @@ f:\Nt Innovation\
 │   ├── tickets/              # Ticket CRUD, filters, permissions & pagination
 │   ├── dashboard/            # Aggregated statistics API
 │   ├── ai_assistant/         # Server-side AI triage and resolution service layer
-│   ├── requirements.txt      # Pinned Python dependencies (including SimpleJWT & PyJWT)
-│   ├── .env.example          # Environment variable template
+│   ├── requirements.txt      # Pinned Python dependencies (including SimpleJWT, dj-database-url)
+│   ├── .env.example          # Environment variable template (DATABASE_URL & DB credentials)
 │   └── manage.py
 │
 ├── frontend/                 # React 19 + Vite Application
@@ -76,8 +76,8 @@ f:\Nt Innovation\
 
 ### Stack Components:
 - **Frontend**: React 19, Vite, Axios, Tailwind CSS v3, React Router v7, Lucide Icons
-- **Backend**: Python 3.12+, Django 6.x, Django REST Framework, Django SimpleJWT (with Token Blacklist), Django CORS Headers, Python-Dotenv, Psycopg2-binary
-- **Database**: PostgreSQL (or SQLite fallback for seamless local onboarding)
+- **Backend**: Python 3.12+, Django 6.x, Django REST Framework, Django SimpleJWT (with Token Blacklist), Django CORS Headers, Python-Dotenv, Psycopg2-binary, dj-database-url
+- **Database**: PostgreSQL (supports cloud `DATABASE_URL` for Neon, Supabase, Render, or local PostgreSQL credentials)
 - **AI Integration**: OpenAI-compatible REST API client with timeout protection and schema validation
 
 ---
@@ -110,10 +110,23 @@ f:\Nt Innovation\
    pip install -r requirements.txt
    ```
 
-4. Create your environment configuration:
+4. Create and configure your environment variables:
    ```bash
    cp .env.example .env
    ```
+   Open `backend/.env` and configure your database connection:
+   - **Option A: Remote Cloud Database (Recommended for Neon, Supabase, Render, Heroku)**:
+     ```env
+     DATABASE_URL=postgresql://<user>:<password>@<host>/<dbname>?sslmode=require
+     ```
+   - **Option B: Local PostgreSQL**:
+     ```env
+     DB_NAME=helpdesk_db
+     DB_USER=postgres
+     DB_PASSWORD=your_password
+     DB_HOST=localhost
+     DB_PORT=5432
+     ```
    *(Optional: Add your free Google Gemini API key or OpenAI key in `backend/.env` to enable live AI triage & resolution).*
 
 5. Apply database migrations:
@@ -291,6 +304,7 @@ npm run build
 
 ## 🔒 Security & Best Practices
 - **No secrets in git**: `.env` files and logs are explicitly excluded via `.gitignore`.
+- **Database Connection Flexibility & Reliability**: Seamless support for managed cloud PostgreSQL providers (`DATABASE_URL`) with connection pooling (`conn_max_age=60`), active health checks (`conn_health_checks=True`), and SSL enforcement, alongside traditional local credentials.
 - **Customer Statement Integrity (Audit Policy)**: In line with real-world enterprise compliance (e.g. Zendesk/Freshdesk), a customer's reported complaint is an immutable record of fact. Admins can triage operational metadata (`Category`, `Priority`, `Status`), but are strictly barred at both the frontend and backend serializer level from altering the customer's original `Title` and `Description`.
 - **Cross-Origin Resource Sharing (CORS)**: Configured specifically for trusted frontend origins.
 - **Object-Level Permissions**: Regular users receive `404 Not Found` when requesting tickets outside their ownership to avoid data enumeration.

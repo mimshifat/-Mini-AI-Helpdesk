@@ -14,6 +14,11 @@ import { RoleBadge } from '../common/Badge';
 
 export function Sidebar({ mobileOpen = false, setMobileOpen }) {
   const { user, logout, isAdmin } = useAuth();
+  const userFullName = [user?.first_name, user?.last_name].filter(Boolean).join(' ').trim();
+  const userDisplayName = userFullName || user?.username || 'User';
+  const userInitials = userFullName
+    ? `${user.first_name?.[0] || ''}${user.last_name?.[0] || ''}`.toUpperCase()
+    : user?.username?.charAt(0).toUpperCase();
 
   const navItems = [
     { name: 'Dashboard', to: '/', icon: LayoutDashboard },
@@ -110,12 +115,13 @@ export function Sidebar({ mobileOpen = false, setMobileOpen }) {
         <div className="p-4 border-t border-slate-800 bg-slate-950/50">
           <div className="flex items-center justify-between gap-3 p-2 rounded-xl bg-slate-900 border border-slate-800/80">
             <div className="flex items-center gap-3 min-w-0">
-              <div className="w-9 h-9 rounded-lg bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-300 shrink-0 font-bold text-sm">
-                {user?.username ? user.username.charAt(0).toUpperCase() : <UserIcon className="w-4 h-4" />}
+              <div className="w-9 h-9 rounded-lg bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-300 shrink-0 font-bold text-xs tracking-wider">
+                {userInitials || <UserIcon className="w-4 h-4" />}
               </div>
               <div className="min-w-0">
-                <p className="text-sm font-medium text-white truncate">{user?.username || 'User'}</p>
+                <p className="text-sm font-semibold text-white truncate">{userDisplayName}</p>
                 <div className="flex items-center gap-1.5 mt-0.5">
+                  <span className="text-[11px] text-slate-400 font-mono truncate">@{user?.username || 'user'}</span>
                   <RoleBadge role={user?.role || 'user'} />
                 </div>
               </div>

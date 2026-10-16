@@ -17,6 +17,7 @@ class TicketListSerializer(serializers.ModelSerializer):
     """Minimal serializer for list endpoints — avoids N+1 with select_related."""
 
     creator_username = serializers.CharField(source='creator.username', read_only=True)
+    creator_name = serializers.SerializerMethodField()
 
     class Meta:
         model = Ticket
@@ -27,9 +28,16 @@ class TicketListSerializer(serializers.ModelSerializer):
             'priority',
             'status',
             'creator_username',
+            'creator_name',
             'created_at',
             'updated_at',
         ]
+
+    def get_creator_name(self, obj) -> str:
+        if not obj.creator:
+            return 'Unknown'
+        full_name = f"{obj.creator.first_name} {obj.creator.last_name}".strip()
+        return full_name or obj.creator.username
 
 
 class TicketDetailSerializer(serializers.ModelSerializer):
@@ -37,6 +45,7 @@ class TicketDetailSerializer(serializers.ModelSerializer):
 
     creator = UserSerializer(read_only=True)
     creator_username = serializers.CharField(source='creator.username', read_only=True)
+    creator_name = serializers.SerializerMethodField()
 
     class Meta:
         model = Ticket
@@ -50,9 +59,16 @@ class TicketDetailSerializer(serializers.ModelSerializer):
             'agent_response',
             'creator',
             'creator_username',
+            'creator_name',
             'created_at',
             'updated_at',
         ]
+
+    def get_creator_name(self, obj) -> str:
+        if not obj.creator:
+            return 'Unknown'
+        full_name = f"{obj.creator.first_name} {obj.creator.last_name}".strip()
+        return full_name or obj.creator.username
 
 
 class TicketCreateSerializer(serializers.ModelSerializer):

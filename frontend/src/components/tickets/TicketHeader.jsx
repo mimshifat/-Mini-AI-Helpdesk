@@ -13,6 +13,16 @@ export function TicketHeader({
   onDelete,
 }) {
   const { user, isAdmin } = useAuth();
+  const creatorFullName = [ticket.creator?.first_name, ticket.creator?.last_name]
+    .filter(Boolean)
+    .join(' ')
+    .trim();
+  const creatorDisplayName =
+    creatorFullName ||
+    ticket.creator_name ||
+    ticket.creator?.username ||
+    ticket.creator_username ||
+    'Unknown';
   const creatorUsername = ticket.creator?.username || ticket.creator_username || 'Unknown';
   const isSelf = Boolean(
     (user?.id && ticket.creator?.id && user.id === ticket.creator.id) ||
@@ -77,7 +87,7 @@ export function TicketHeader({
             <UserIcon className="w-3.5 h-3.5 text-slate-400" />
             Submitted by{' '}
             <strong className="text-slate-800">
-              {isSelf ? `You (${creatorUsername})` : creatorUsername}
+              {isSelf ? `You (${creatorDisplayName})` : creatorDisplayName}
             </strong>
             {ticket.creator?.role && <RoleBadge role={ticket.creator.role} />}
           </span>

@@ -80,7 +80,7 @@ export function TicketTable({ tickets, loading, isAdmin, hasActiveFilters, onRes
                     <td className="py-4 px-4 whitespace-nowrap text-xs text-slate-600">
                       <span className="flex items-center gap-1.5 font-medium">
                         <UserIcon className="w-3.5 h-3.5 text-slate-400" />
-                        {t.creator?.username || t.creator_username || 'Unknown'}
+                        {t.creator_name || t.creator?.username || t.creator_username || 'Unknown'}
                       </span>
                     </td>
                   )}

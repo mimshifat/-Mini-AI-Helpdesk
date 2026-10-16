@@ -85,7 +85,7 @@ export function RecentTicketsTable({ tickets, loading, isAdmin }) {
                     <td className="py-4 px-4 text-xs text-slate-600">
                       <span className="flex items-center gap-1.5 font-medium">
                         <UserIcon className="w-3.5 h-3.5 text-slate-400" />
-                        {t.creator?.username || t.creator_username || 'Unknown'}
+                        {t.creator_name || t.creator?.username || t.creator_username || 'Unknown'}
                       </span>
                     </td>
                   )}
