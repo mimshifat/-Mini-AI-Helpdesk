@@ -101,9 +101,19 @@ mini-ai-helpdesk/
 
 2. Create and activate a Python virtual environment:
    ```bash
-   # Windows PowerShell:
    python -m venv venv
+
+   # Windows PowerShell:
    .\venv\Scripts\Activate.ps1
+
+   # Windows Command Prompt (CMD):
+   venv\Scripts\activate.bat
+
+   # Git Bash (Windows):
+   source venv/Scripts/activate
+
+   # Linux / macOS:
+   source venv/bin/activate
    ```
 
 3. Install pinned dependencies:
