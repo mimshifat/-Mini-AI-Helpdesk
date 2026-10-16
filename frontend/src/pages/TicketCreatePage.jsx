@@ -1,9 +1,14 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { ArrowLeft, Sparkles } from 'lucide-react';
-import { useCreateTicket } from '../hooks';
-import { Card, CardHeader, CardTitle, CardDescription } from '../components/common/Card';
-import { TicketForm, TicketAiTriageCard } from '../components/tickets';
+import React from "react";
+import { Link } from "react-router-dom";
+import { ArrowLeft, Sparkles } from "lucide-react";
+import { useCreateTicket } from "../hooks";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "../components/common/Card";
+import { TicketForm, TicketAiTriageCard } from "../components/tickets";
 
 export function TicketCreatePage() {
   const {
@@ -50,7 +55,8 @@ export function TicketCreatePage() {
             <div>
               <CardTitle className="text-xl">Open a Support Ticket</CardTitle>
               <CardDescription>
-                Submit your inquiry and let our AI Copilot triage category & priority.
+                Submit your inquiry and let our AI Copilot triage category &
+                priority.
               </CardDescription>
             </div>
           </div>

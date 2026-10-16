@@ -1,9 +1,13 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { Plus } from 'lucide-react';
-import { useAuth, useTickets } from '../hooks';
-import { Button } from '../components/common/Button';
-import { TicketFilters, TicketTable, TicketPagination } from '../components/tickets';
+import React from "react";
+import { Link } from "react-router-dom";
+import { Plus } from "lucide-react";
+import { useAuth, useTickets } from "../hooks";
+import { Button } from "../components/common/Button";
+import {
+  TicketFilters,
+  TicketTable,
+  TicketPagination,
+} from "../components/tickets";
 
 export function TicketListPage() {
   const { isAdmin } = useAuth();
@@ -32,7 +36,9 @@ export function TicketListPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight flex items-center gap-2.5">
-            <span>{isAdmin ? 'All Support Tickets' : 'My Support Tickets'}</span>
+            <span>
+              {isAdmin ? "All Support Tickets" : "My Support Tickets"}
+            </span>
             {!loading && (
               <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200">
                 {count ?? 0}
@@ -41,8 +47,8 @@ export function TicketListPage() {
           </h2>
           <p className="text-slate-500 text-xs sm:text-sm mt-0.5">
             {isAdmin
-              ? 'Triage, search, and manage customer tickets across the helpdesk.'
-              : 'Review your submitted inquiries, check progress, and track status.'}
+              ? "Triage, search, and manage customer tickets across the helpdesk."
+              : "Review your submitted inquiries, check progress, and track status."}
           </p>
         </div>
 

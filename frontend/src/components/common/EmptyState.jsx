@@ -1,11 +1,11 @@
-import React from 'react';
-import { Inbox } from 'lucide-react';
-import { Button } from './Button';
+import React from "react";
+import { Inbox } from "lucide-react";
+import { Button } from "./Button";
 
 export function EmptyState({
   icon: Icon = Inbox,
-  title = 'No items found',
-  description = 'There are no records matching your current filter criteria.',
+  title = "No items found",
+  description = "There are no records matching your current filter criteria.",
   actionLabel,
   onAction,
   actionIcon,

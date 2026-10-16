@@ -1,19 +1,19 @@
-import React from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { Save, X, Clock, ShieldAlert, Lock, CheckCircle2 } from 'lucide-react';
-import { useAuth, useTicketDetail, useAICopilot } from '../hooks';
-import { Card } from '../components/common/Card';
-import { Button } from '../components/common/Button';
-import { Input } from '../components/common/Input';
-import { Textarea } from '../components/common/Textarea';
-import { Select } from '../components/common/Select';
-import { Skeleton } from '../components/common/Skeleton';
+import React from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { Save, X, Clock, ShieldAlert, Lock, CheckCircle2 } from "lucide-react";
+import { useAuth, useTicketDetail, useAICopilot } from "../hooks";
+import { Card } from "../components/common/Card";
+import { Button } from "../components/common/Button";
+import { Input } from "../components/common/Input";
+import { Textarea } from "../components/common/Textarea";
+import { Select } from "../components/common/Select";
+import { Skeleton } from "../components/common/Skeleton";
 import {
   TicketHeader,
   TicketAdminTriageBar,
   TicketAiResolutionCard,
   TicketDeleteModal,
-} from '../components/tickets';
+} from "../components/tickets";
 
 export function TicketDetailPage() {
   const { id } = useParams();
@@ -61,11 +61,13 @@ export function TicketDetailPage() {
     getResolutionAssist,
   } = useAICopilot();
 
-  const creatorId = ticket?.creator?.id ?? (typeof ticket?.creator === 'number' ? ticket?.creator : null);
+  const creatorId =
+    ticket?.creator?.id ??
+    (typeof ticket?.creator === "number" ? ticket?.creator : null);
   const creatorUsername = ticket?.creator?.username || ticket?.creator_username;
   const isOwner = Boolean(
     (user?.id && user?.id === creatorId) ||
-    (user?.username && user?.username === creatorUsername)
+    (user?.username && user?.username === creatorUsername),
   );
   const isCustomerStatementImmutable = Boolean(isAdmin && !isOwner);
   const canEdit = isOwner || isAdmin;
@@ -86,9 +88,17 @@ export function TicketDetailPage() {
   if (error || !ticket) {
     return (
       <div className="max-w-md mx-auto my-12 p-8 bg-white border border-rose-200 rounded-3xl text-center space-y-4 shadow-sm">
-        <div className="text-rose-600 font-bold text-lg">Unable to Display Ticket</div>
-        <p className="text-slate-500 text-xs sm:text-sm">{error || 'Ticket could not be located.'}</p>
-        <Button variant="primary" onClick={() => navigate('/tickets')} className="text-xs">
+        <div className="text-rose-600 font-bold text-lg">
+          Unable to Display Ticket
+        </div>
+        <p className="text-slate-500 text-xs sm:text-sm">
+          {error || "Ticket could not be located."}
+        </p>
+        <Button
+          variant="primary"
+          onClick={() => navigate("/tickets")}
+          className="text-xs"
+        >
           Return to Tickets
         </Button>
       </div>
@@ -142,7 +152,9 @@ export function TicketDetailPage() {
           <form onSubmit={saveEdit}>
             <div className="p-6 sm:p-8 space-y-5">
               <div className="flex items-center justify-between border-b border-slate-100 pb-4">
-                <h3 className="text-lg font-bold text-slate-900">Edit Ticket Details</h3>
+                <h3 className="text-lg font-bold text-slate-900">
+                  Edit Ticket Details
+                </h3>
                 <span className="text-xs text-slate-500">ID #{ticket.id}</span>
               </div>
 
@@ -150,9 +162,14 @@ export function TicketDetailPage() {
                 <div className="p-4 bg-amber-50/90 border border-amber-200 rounded-2xl text-xs text-amber-900 flex items-start gap-3 shadow-2xs">
                   <ShieldAlert className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
                   <div className="space-y-0.5">
-                    <span className="font-bold">Customer Statement Integrity Policy Active</span>
+                    <span className="font-bold">
+                      Customer Statement Integrity Policy Active
+                    </span>
                     <p className="text-slate-600 text-[11px] leading-relaxed">
-                      To preserve audit records and prevent tampering with the customer's reported complaint, Title and Description cannot be altered by administrators. You can triage Category, Priority, and Status below.
+                      To preserve audit records and prevent tampering with the
+                      customer's reported complaint, Title and Description
+                      cannot be altered by administrators. You can triage
+                      Category, Priority, and Status below.
                     </p>
                   </div>
                 </div>
@@ -165,7 +182,11 @@ export function TicketDetailPage() {
                 icon={isCustomerStatementImmutable ? Lock : undefined}
                 value={editTitle}
                 onChange={(e) => setEditTitle(e.target.value)}
-                helperText={isCustomerStatementImmutable ? 'Locked: Original customer record' : undefined}
+                helperText={
+                  isCustomerStatementImmutable
+                    ? "Locked: Original customer record"
+                    : undefined
+                }
               />
 
               <Textarea
@@ -175,7 +196,11 @@ export function TicketDetailPage() {
                 disabled={isCustomerStatementImmutable}
                 value={editDescription}
                 onChange={(e) => setEditDescription(e.target.value)}
-                helperText={isCustomerStatementImmutable ? 'Locked: Original customer record' : undefined}
+                helperText={
+                  isCustomerStatementImmutable
+                    ? "Locked: Original customer record"
+                    : undefined
+                }
               />
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -253,10 +278,11 @@ export function TicketDetailPage() {
                   </span>
                 </div>
                 <span className="text-xs text-slate-500">
-                  Last updated {new Date(ticket.updated_at).toLocaleDateString(undefined, {
-                    month: 'short',
-                    day: 'numeric',
-                    year: 'numeric',
+                  Last updated{" "}
+                  {new Date(ticket.updated_at).toLocaleDateString(undefined, {
+                    month: "short",
+                    day: "numeric",
+                    year: "numeric",
                   })}
                 </span>
               </div>
@@ -273,7 +299,13 @@ export function TicketDetailPage() {
           resolution={resolutionResult}
           loading={resolutionLoading}
           error={resolutionError}
-          onGenerate={() => getResolutionAssist(ticket.title, ticket.description, ticket.category)}
+          onGenerate={() =>
+            getResolutionAssist(
+              ticket.title,
+              ticket.description,
+              ticket.category,
+            )
+          }
           onSendResponse={sendAgentResponse}
           sendingResponse={sendingResponse}
           hasExistingResponse={Boolean(ticket.agent_response)}
@@ -296,11 +328,11 @@ export function TicketDetailPage() {
                 </span>
               </div>
               <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                {ticket.status === 'Open'
-                  ? 'Your inquiry is currently in the queue. A support engineer has been notified and will triage it according to its SLA priority.'
-                  : ticket.status === 'In Progress'
-                  ? 'A support engineer is actively investigating your request. We will update you as soon as further information is available.'
-                  : 'This ticket has been marked as resolved. If you still have questions or need more assistance, you can edit your ticket details or submit a new inquiry.'}
+                {ticket.status === "Open"
+                  ? "Your inquiry is currently in the queue. A support engineer has been notified and will triage it according to its SLA priority."
+                  : ticket.status === "In Progress"
+                    ? "A support engineer is actively investigating your request. We will update you as soon as further information is available."
+                    : "This ticket has been marked as resolved. If you still have questions or need more assistance, you can edit your ticket details or submit a new inquiry."}
               </p>
             </div>
           </div>

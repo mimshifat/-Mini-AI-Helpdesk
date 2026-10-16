@@ -1,7 +1,9 @@
-import React from 'react';
+import React from "react";
 
-export function Skeleton({ className = '' }) {
-  return <div className={`animate-pulse rounded-lg bg-slate-200/80 ${className}`} />;
+export function Skeleton({ className = "" }) {
+  return (
+    <div className={`animate-pulse rounded-lg bg-slate-200/80 ${className}`} />
+  );
 }
 
 export function StatCardSkeleton() {

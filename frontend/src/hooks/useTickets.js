@@ -1,6 +1,6 @@
-import { useState, useEffect, useCallback } from 'react';
-import { ticketsApi } from '../api/tickets';
-import { useDebounce } from './useDebounce';
+import { useState, useEffect, useCallback } from "react";
+import { ticketsApi } from "../api/tickets";
+import { useDebounce } from "./useDebounce";
 
 /**
  * useTickets
@@ -12,13 +12,13 @@ export function useTickets() {
   const [totalPages, setTotalPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
   const debouncedSearch = useDebounce(search, 300);
-  const [status, setStatus] = useState('All');
-  const [priority, setPriority] = useState('All');
-  const [category, setCategory] = useState('All');
+  const [status, setStatus] = useState("All");
+  const [priority, setPriority] = useState("All");
+  const [category, setCategory] = useState("All");
 
   useEffect(() => {
     setCurrentPage(1);
@@ -26,7 +26,7 @@ export function useTickets() {
 
   const fetchTickets = useCallback(async () => {
     setLoading(true);
-    setError('');
+    setError("");
     try {
       const data = await ticketsApi.getTickets({
         page: currentPage,
@@ -40,8 +40,8 @@ export function useTickets() {
       setCount(data.count || 0);
       setTotalPages(Math.ceil((data.count || 0) / 10) || 1);
     } catch (err) {
-      console.error('Failed to fetch tickets:', err);
-      setError(err.message || 'Failed to fetch tickets from server.');
+      console.error("Failed to fetch tickets:", err);
+      setError(err.message || "Failed to fetch tickets from server.");
     } finally {
       setLoading(false);
     }
@@ -52,14 +52,15 @@ export function useTickets() {
   }, [fetchTickets]);
 
   const resetFilters = useCallback(() => {
-    setSearch('');
-    setStatus('All');
-    setPriority('All');
-    setCategory('All');
+    setSearch("");
+    setStatus("All");
+    setPriority("All");
+    setCategory("All");
     setCurrentPage(1);
   }, []);
 
-  const hasActiveFilters = search || status !== 'All' || priority !== 'All' || category !== 'All';
+  const hasActiveFilters =
+    search || status !== "All" || priority !== "All" || category !== "All";
 
   return {
     tickets,

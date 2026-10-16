@@ -1,6 +1,6 @@
-import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
-import { AuthProvider } from './AuthProvider';
+import React from "react";
+import { BrowserRouter } from "react-router-dom";
+import { AuthProvider } from "./AuthProvider";
 
 /**
  * AppProviders
@@ -9,9 +9,7 @@ import { AuthProvider } from './AuthProvider';
 export function AppProviders({ children }) {
   return (
     <BrowserRouter>
-      <AuthProvider>
-        {children}
-      </AuthProvider>
+      <AuthProvider>{children}</AuthProvider>
     </BrowserRouter>
   );
 }

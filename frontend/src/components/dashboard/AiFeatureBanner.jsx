@@ -1,7 +1,7 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { Sparkles, ArrowRight } from 'lucide-react';
-import { Button } from '../common/Button';
+import React from "react";
+import { Link } from "react-router-dom";
+import { Sparkles, ArrowRight } from "lucide-react";
+import { Button } from "../common/Button";
 
 export function AiFeatureBanner() {
   return (
@@ -16,7 +16,9 @@ export function AiFeatureBanner() {
             Smart Two-Sided Intelligence
           </h3>
           <p className="text-purple-200/80 text-xs sm:text-sm leading-relaxed">
-            Auto-categorize customer inquiries with priority suggestions upon creation, and assist support agents with 3-step action plans and draft replies.
+            Auto-categorize customer inquiries with priority suggestions upon
+            creation, and assist support agents with 3-step action plans and
+            draft replies.
           </p>
         </div>
 

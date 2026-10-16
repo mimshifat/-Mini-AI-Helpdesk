@@ -1,7 +1,7 @@
-import React from 'react';
-import { Sparkles, CheckCircle2, AlertCircle, X } from 'lucide-react';
-import { Button } from '../common/Button';
-import { CategoryBadge, PriorityBadge } from '../common/Badge';
+import React from "react";
+import { Sparkles, CheckCircle2, AlertCircle, X } from "lucide-react";
+import { Button } from "../common/Button";
+import { CategoryBadge, PriorityBadge } from "../common/Badge";
 
 export function TicketAiTriageCard({
   suggestion,
@@ -15,7 +15,9 @@ export function TicketAiTriageCard({
       <div className="p-4 rounded-2xl bg-amber-50/90 border border-amber-200 text-amber-900 text-xs flex items-start gap-3 shadow-2xs">
         <AlertCircle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
         <div className="space-y-1">
-          <p className="font-semibold text-amber-950">AI Assistant Unavailable</p>
+          <p className="font-semibold text-amber-950">
+            AI Assistant Unavailable
+          </p>
           <p className="text-amber-800 leading-relaxed">{error}</p>
         </div>
       </div>

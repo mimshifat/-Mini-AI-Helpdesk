@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef } from "react";
 
 export const Select = forwardRef(function Select(
   {
@@ -8,19 +8,23 @@ export const Select = forwardRef(function Select(
     helperText,
     id,
     required,
-    className = '',
-    containerClassName = '',
+    className = "",
+    containerClassName = "",
     children,
     ...props
   },
-  ref
+  ref,
 ) {
-  const selectId = id || (label ? label.toLowerCase().replace(/\s+/g, '-') : undefined);
+  const selectId =
+    id || (label ? label.toLowerCase().replace(/\s+/g, "-") : undefined);
 
   return (
     <div className={`w-full space-y-1.5 ${containerClassName}`}>
       {label && (
-        <label htmlFor={selectId} className="block text-sm font-medium text-slate-700">
+        <label
+          htmlFor={selectId}
+          className="block text-sm font-medium text-slate-700"
+        >
           {label} {required && <span className="text-rose-500">*</span>}
         </label>
       )}
@@ -34,16 +38,16 @@ export const Select = forwardRef(function Select(
           aria-describedby={error ? `${selectId}-error` : undefined}
           className={`block w-full appearance-none rounded-xl border bg-white px-3.5 py-2.5 pr-10 text-sm text-slate-900 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-0 disabled:bg-slate-50 disabled:text-slate-400 ${
             error
-              ? 'border-rose-300 focus:border-rose-500 focus:ring-rose-200'
-              : 'border-slate-300 hover:border-slate-400 focus:border-brand-500 focus:ring-brand-100'
+              ? "border-rose-300 focus:border-rose-500 focus:ring-rose-200"
+              : "border-slate-300 hover:border-slate-400 focus:border-brand-500 focus:ring-brand-100"
           } ${className}`}
           {...props}
         >
           {children
             ? children
             : options.map((opt) => {
-                const value = typeof opt === 'object' ? opt.value : opt;
-                const label = typeof opt === 'object' ? opt.label : opt;
+                const value = typeof opt === "object" ? opt.value : opt;
+                const label = typeof opt === "object" ? opt.label : opt;
                 return (
                   <option key={value} value={value}>
                     {label}
@@ -59,7 +63,10 @@ export const Select = forwardRef(function Select(
       </div>
 
       {error ? (
-        <p id={`${selectId}-error`} className="text-xs text-rose-600 font-medium">
+        <p
+          id={`${selectId}-error`}
+          className="text-xs text-rose-600 font-medium"
+        >
           {error}
         </p>
       ) : helperText ? (

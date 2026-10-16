@@ -1,5 +1,5 @@
-import { api } from './client';
+import { api } from "./client";
 
 export const dashboardApi = {
-  getStats: () => api.get('/dashboard/stats/'),
+  getStats: () => api.get("/dashboard/stats/"),
 };

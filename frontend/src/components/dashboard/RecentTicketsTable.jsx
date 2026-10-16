@@ -1,10 +1,10 @@
-import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { ArrowRight, Inbox, Clock, User as UserIcon } from 'lucide-react';
-import { Card, CardHeader, CardTitle, CardDescription } from '../common/Card';
-import { Button } from '../common/Button';
-import { StatusBadge, PriorityBadge, CategoryBadge } from '../common/Badge';
-import { TableRowSkeleton } from '../common/Skeleton';
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { ArrowRight, Inbox, Clock, User as UserIcon } from "lucide-react";
+import { Card, CardHeader, CardTitle, CardDescription } from "../common/Card";
+import { Button } from "../common/Button";
+import { StatusBadge, PriorityBadge, CategoryBadge } from "../common/Badge";
+import { TableRowSkeleton } from "../common/Skeleton";
 
 export function RecentTicketsTable({ tickets, loading, isAdmin }) {
   const navigate = useNavigate();
@@ -14,12 +14,19 @@ export function RecentTicketsTable({ tickets, loading, isAdmin }) {
         <div>
           <CardTitle>Recent Support Inquiries</CardTitle>
           <CardDescription>
-            {isAdmin ? 'Latest tickets submitted across the system' : 'Your most recent ticket submissions'}
+            {isAdmin
+              ? "Latest tickets submitted across the system"
+              : "Your most recent ticket submissions"}
           </CardDescription>
         </div>
 
         <Link to="/tickets">
-          <Button variant="ghost" size="sm" icon={ArrowRight} className="text-xs">
+          <Button
+            variant="ghost"
+            size="sm"
+            icon={ArrowRight}
+            className="text-xs"
+          >
             View All Tickets
           </Button>
         </Link>
@@ -46,11 +53,16 @@ export function RecentTicketsTable({ tickets, loading, isAdmin }) {
               </>
             ) : tickets.length === 0 ? (
               <tr>
-                <td colSpan={isAdmin ? 6 : 5} className="py-12 text-center text-slate-400">
+                <td
+                  colSpan={isAdmin ? 6 : 5}
+                  className="py-12 text-center text-slate-400"
+                >
                   <div className="flex flex-col items-center justify-center space-y-2">
                     <Inbox className="w-8 h-8 text-slate-300" />
                     <p className="text-sm font-medium">No tickets found</p>
-                    <p className="text-xs text-slate-400">Create your first ticket to get started</p>
+                    <p className="text-xs text-slate-400">
+                      Create your first ticket to get started
+                    </p>
                   </div>
                 </td>
               </tr>
@@ -85,7 +97,10 @@ export function RecentTicketsTable({ tickets, loading, isAdmin }) {
                     <td className="py-4 px-4 text-xs text-slate-600">
                       <span className="flex items-center gap-1.5 font-medium">
                         <UserIcon className="w-3.5 h-3.5 text-slate-400" />
-                        {t.creator_name || t.creator?.username || t.creator_username || 'Unknown'}
+                        {t.creator_name ||
+                          t.creator?.username ||
+                          t.creator_username ||
+                          "Unknown"}
                       </span>
                     </td>
                   )}
@@ -93,8 +108,8 @@ export function RecentTicketsTable({ tickets, loading, isAdmin }) {
                     <span className="flex items-center justify-end gap-1">
                       <Clock className="w-3.5 h-3.5 text-slate-400" />
                       {new Date(t.updated_at).toLocaleDateString(undefined, {
-                        month: 'short',
-                        day: 'numeric',
+                        month: "short",
+                        day: "numeric",
                       })}
                     </span>
                   </td>

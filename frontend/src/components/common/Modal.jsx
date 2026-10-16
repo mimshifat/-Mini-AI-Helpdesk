@@ -1,30 +1,38 @@
-import React, { useEffect } from 'react';
-import { X } from 'lucide-react';
+import React, { useEffect } from "react";
+import { X } from "lucide-react";
 
-export function Modal({ isOpen, onClose, title, description, children, size = 'md' }) {
+export function Modal({
+  isOpen,
+  onClose,
+  title,
+  description,
+  children,
+  size = "md",
+}) {
   useEffect(() => {
     function handleKeyDown(e) {
-      if (e.key === 'Escape' && isOpen) {
+      if (e.key === "Escape" && isOpen) {
         onClose();
       }
     }
     if (isOpen) {
-      document.body.style.overflow = 'hidden';
-      window.addEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = "hidden";
+      window.addEventListener("keydown", handleKeyDown);
     }
     return () => {
-      document.body.style.overflow = 'unset';
-      window.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = "unset";
+      window.removeEventListener("keydown", handleKeyDown);
     };
   }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
-  const sizeClasses = {
-    sm: 'max-w-md',
-    md: 'max-w-lg',
-    lg: 'max-w-2xl',
-  }[size] || 'max-w-lg';
+  const sizeClasses =
+    {
+      sm: "max-w-md",
+      md: "max-w-lg",
+      lg: "max-w-2xl",
+    }[size] || "max-w-lg";
 
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto">
@@ -44,7 +52,9 @@ export function Modal({ isOpen, onClose, title, description, children, size = 'm
           <div className="flex items-start justify-between border-b border-slate-100 px-6 py-5">
             <div>
               <h3 className="text-lg font-semibold text-slate-900">{title}</h3>
-              {description && <p className="mt-1 text-sm text-slate-500">{description}</p>}
+              {description && (
+                <p className="mt-1 text-sm text-slate-500">{description}</p>
+              )}
             </div>
             <button
               type="button"

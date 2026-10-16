@@ -1,6 +1,6 @@
-import React from 'react';
-import { AppProviders } from './providers/AppProviders';
-import { AppRouteConfig } from './routes/Route';
+import React from "react";
+import { AppProviders } from "./providers/AppProviders";
+import { AppRouteConfig } from "./routes/Route";
 
 /**
  * Root Application Component.

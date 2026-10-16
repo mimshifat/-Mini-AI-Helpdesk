@@ -1,7 +1,7 @@
-import React from 'react';
-import { Search, Filter, RotateCcw } from 'lucide-react';
-import { Card } from '../common/Card';
-import { Button } from '../common/Button';
+import React from "react";
+import { Search, Filter, RotateCcw } from "lucide-react";
+import { Card } from "../common/Card";
+import { Button } from "../common/Button";
 
 export function TicketFilters({
   search,

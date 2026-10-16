@@ -1,38 +1,38 @@
-import React, { useState } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { useAuth } from '../hooks';
-import { 
-  Sparkles, 
-  Lock, 
-  User as UserIcon, 
-  AlertCircle, 
-  ShieldCheck, 
+import React, { useState } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useAuth } from "../hooks";
+import {
+  Sparkles,
+  Lock,
+  User as UserIcon,
+  AlertCircle,
+  ShieldCheck,
   Users,
   Eye,
-  EyeOff
-} from 'lucide-react';
-import { Button } from '../components/common/Button';
-import { Input } from '../components/common/Input';
+  EyeOff,
+} from "lucide-react";
+import { Button } from "../components/common/Button";
+import { Input } from "../components/common/Input";
 
 export function LoginPage() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const { login } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
-  const from = location.state?.from?.pathname || '/';
+  const from = location.state?.from?.pathname || "/";
 
   async function handleSubmit(e) {
     e.preventDefault();
-    setError('');
+    setError("");
 
     if (!username.trim() || !password) {
-      setError('Please provide both username and password.');
+      setError("Please provide both username and password.");
       return;
     }
 
@@ -41,7 +41,9 @@ export function LoginPage() {
       await login(username.trim(), password);
       navigate(from, { replace: true });
     } catch (err) {
-      setError(err.message || 'Authentication failed. Please verify your credentials.');
+      setError(
+        err.message || "Authentication failed. Please verify your credentials.",
+      );
     } finally {
       setLoading(false);
     }
@@ -50,7 +52,7 @@ export function LoginPage() {
   function fillCredentials(user, pass) {
     setUsername(user);
     setPassword(pass);
-    setError('');
+    setError("");
   }
 
   return (
@@ -74,7 +76,9 @@ export function LoginPage() {
         <div className="glass-panel bg-white/95 backdrop-blur-xl rounded-3xl p-6 sm:p-8 shadow-2xl border border-white/20">
           <div className="mb-6">
             <h2 className="text-xl font-bold text-slate-900">Welcome Back</h2>
-            <p className="text-sm text-slate-500 mt-1">Sign in to manage and triage support tickets.</p>
+            <p className="text-sm text-slate-500 mt-1">
+              Sign in to manage and triage support tickets.
+            </p>
           </div>
 
           {error && (
@@ -97,7 +101,10 @@ export function LoginPage() {
             />
 
             <div className="space-y-1.5">
-              <label htmlFor="password" className="block text-sm font-medium text-slate-700">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-slate-700"
+              >
                 Password <span className="text-rose-500">*</span>
               </label>
               <div className="relative rounded-xl shadow-sm">
@@ -106,7 +113,7 @@ export function LoginPage() {
                 </div>
                 <input
                   id="password"
-                  type={showPassword ? 'text' : 'password'}
+                  type={showPassword ? "text" : "password"}
                   required
                   placeholder="Enter your password"
                   value={password}
@@ -119,7 +126,11 @@ export function LoginPage() {
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute inset-y-0 right-0 flex items-center pr-3.5 text-slate-400 hover:text-slate-600"
                 >
-                  {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                  {showPassword ? (
+                    <EyeOff className="h-4 w-4" />
+                  ) : (
+                    <Eye className="h-4 w-4" />
+                  )}
                 </button>
               </div>
             </div>
@@ -144,32 +155,36 @@ export function LoginPage() {
             <div className="grid grid-cols-2 gap-2.5">
               <button
                 type="button"
-                onClick={() => fillCredentials('admin_demo', 'Admin@1234')}
+                onClick={() => fillCredentials("admin_demo", "Admin@1234")}
                 className="p-2.5 rounded-xl border border-purple-200 bg-purple-50/70 hover:bg-purple-100/80 text-left transition-colors group"
               >
                 <div className="flex items-center gap-1.5 text-purple-700 font-semibold text-xs mb-1">
                   <ShieldCheck className="w-3.5 h-3.5" />
                   <span>Admin User</span>
                 </div>
-                <div className="text-[11px] text-slate-600 font-mono">admin_demo</div>
+                <div className="text-[11px] text-slate-600 font-mono">
+                  admin_demo
+                </div>
               </button>
 
               <button
                 type="button"
-                onClick={() => fillCredentials('user_demo', 'User@1234')}
+                onClick={() => fillCredentials("user_demo", "User@1234")}
                 className="p-2.5 rounded-xl border border-blue-200 bg-blue-50/70 hover:bg-blue-100/80 text-left transition-colors group"
               >
                 <div className="flex items-center gap-1.5 text-blue-700 font-semibold text-xs mb-1">
                   <Users className="w-3.5 h-3.5" />
                   <span>Standard User</span>
                 </div>
-                <div className="text-[11px] text-slate-600 font-mono">user_demo</div>
+                <div className="text-[11px] text-slate-600 font-mono">
+                  user_demo
+                </div>
               </button>
             </div>
 
             <div className="mt-5 text-center">
               <p className="text-xs text-slate-500">
-                Don't have an account?{' '}
+                Don't have an account?{" "}
                 <Link
                   to="/register"
                   className="font-bold text-brand-600 hover:text-brand-700 hover:underline transition-colors ml-1"

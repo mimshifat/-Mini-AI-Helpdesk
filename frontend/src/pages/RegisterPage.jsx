@@ -1,25 +1,25 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../hooks';
-import { 
-  Sparkles, 
-  Lock, 
-  User as UserIcon, 
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../hooks";
+import {
+  Sparkles,
+  Lock,
+  User as UserIcon,
   Mail,
-  AlertCircle, 
+  AlertCircle,
   ArrowRight,
   Eye,
-  EyeOff
-} from 'lucide-react';
-import { Button } from '../components/common/Button';
-import { Input } from '../components/common/Input';
+  EyeOff,
+} from "lucide-react";
+import { Button } from "../components/common/Button";
+import { Input } from "../components/common/Input";
 
 export function RegisterPage() {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const { register } = useAuth();
@@ -27,37 +27,41 @@ export function RegisterPage() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    setError('');
+    setError("");
 
     const trimmedUser = username.trim();
     const trimmedEmail = email.trim();
 
     if (!trimmedUser || !trimmedEmail || !password) {
-      setError('Please fill in all required fields.');
+      setError("Please fill in all required fields.");
       return;
     }
 
     if (trimmedUser.length < 3) {
-      setError('Username must be at least 3 characters long.');
+      setError("Username must be at least 3 characters long.");
       return;
     }
 
     if (password.length < 6) {
-      setError('Password must be at least 6 characters long.');
+      setError("Password must be at least 6 characters long.");
       return;
     }
 
     setLoading(true);
     try {
       await register(trimmedUser, trimmedEmail, password);
-      navigate('/', { replace: true });
+      navigate("/", { replace: true });
     } catch (err) {
       if (err.details) {
         const firstKey = Object.keys(err.details)[0];
-        const msg = Array.isArray(err.details[firstKey]) ? err.details[firstKey][0] : err.details[firstKey];
-        setError(msg || 'Registration failed.');
+        const msg = Array.isArray(err.details[firstKey])
+          ? err.details[firstKey][0]
+          : err.details[firstKey];
+        setError(msg || "Registration failed.");
       } else {
-        setError(err.message || 'Registration failed. Please check your inputs.');
+        setError(
+          err.message || "Registration failed. Please check your inputs.",
+        );
       }
     } finally {
       setLoading(false);
@@ -84,7 +88,9 @@ export function RegisterPage() {
 
         <div className="glass-panel bg-white/95 backdrop-blur-xl rounded-3xl p-6 sm:p-8 shadow-2xl border border-white/20">
           <div className="mb-6">
-            <h2 className="text-xl font-bold text-slate-900">User Registration</h2>
+            <h2 className="text-xl font-bold text-slate-900">
+              User Registration
+            </h2>
             <p className="text-sm text-slate-500 mt-1">
               Create a standard customer account in seconds.
             </p>
@@ -123,7 +129,10 @@ export function RegisterPage() {
             />
 
             <div className="space-y-1.5">
-              <label htmlFor="password" className="block text-sm font-medium text-slate-700">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-slate-700"
+              >
                 Password <span className="text-rose-500">*</span>
               </label>
               <div className="relative rounded-xl shadow-sm">
@@ -132,7 +141,7 @@ export function RegisterPage() {
                 </div>
                 <input
                   id="password"
-                  type={showPassword ? 'text' : 'password'}
+                  type={showPassword ? "text" : "password"}
                   required
                   placeholder="Choose a secure password (min 6 chars)"
                   value={password}
@@ -145,10 +154,16 @@ export function RegisterPage() {
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute inset-y-0 right-0 flex items-center pr-3.5 text-slate-400 hover:text-slate-600 transition-colors"
                 >
-                  {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                  {showPassword ? (
+                    <EyeOff className="h-4 w-4" />
+                  ) : (
+                    <Eye className="h-4 w-4" />
+                  )}
                 </button>
               </div>
-              <p className="text-xs text-slate-500">Minimum 6 characters long</p>
+              <p className="text-xs text-slate-500">
+                Minimum 6 characters long
+              </p>
             </div>
 
             <div className="pt-2">
@@ -167,7 +182,7 @@ export function RegisterPage() {
 
           <div className="mt-6 pt-5 border-t border-slate-200/80 text-center">
             <p className="text-xs text-slate-500">
-              Already have an account?{' '}
+              Already have an account?{" "}
               <Link
                 to="/login"
                 className="font-bold text-brand-600 hover:text-brand-700 hover:underline transition-colors ml-1"

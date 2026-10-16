@@ -1,10 +1,16 @@
-import React from 'react';
+import React from "react";
 
-export function Card({ children, className = '', hover = false, glass = false, ...props }) {
-  const bgClass = glass ? 'glass-panel' : 'bg-white';
+export function Card({
+  children,
+  className = "",
+  hover = false,
+  glass = false,
+  ...props
+}) {
+  const bgClass = glass ? "glass-panel" : "bg-white";
   const hoverClass = hover
-    ? 'hover:shadow-glass-hover hover:border-brand-200 hover:-translate-y-0.5 transition-all duration-300'
-    : '';
+    ? "hover:shadow-glass-hover hover:border-brand-200 hover:-translate-y-0.5 transition-all duration-300"
+    : "";
 
   return (
     <div
@@ -16,7 +22,7 @@ export function Card({ children, className = '', hover = false, glass = false, .
   );
 }
 
-export function CardHeader({ children, className = '', action }) {
+export function CardHeader({ children, className = "", action }) {
   return (
     <div
       className={`px-6 py-5 border-b border-slate-100 flex items-center justify-between gap-4 ${className}`}
@@ -27,19 +33,23 @@ export function CardHeader({ children, className = '', action }) {
   );
 }
 
-export function CardTitle({ children, className = '' }) {
-  return <h3 className={`text-lg font-semibold text-slate-900 ${className}`}>{children}</h3>;
+export function CardTitle({ children, className = "" }) {
+  return (
+    <h3 className={`text-lg font-semibold text-slate-900 ${className}`}>
+      {children}
+    </h3>
+  );
 }
 
-export function CardDescription({ children, className = '' }) {
+export function CardDescription({ children, className = "" }) {
   return <p className={`text-sm text-slate-500 ${className}`}>{children}</p>;
 }
 
-export function CardBody({ children, className = '' }) {
+export function CardBody({ children, className = "" }) {
   return <div className={`p-6 ${className}`}>{children}</div>;
 }
 
-export function CardFooter({ children, className = '' }) {
+export function CardFooter({ children, className = "" }) {
   return (
     <div
       className={`px-6 py-4 bg-slate-50/70 rounded-b-2xl border-t border-slate-100 flex items-center justify-between ${className}`}

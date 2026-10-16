@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { AuthContext } from '../context';
-import { authApi } from '../api/auth';
+import React, { useState, useEffect, useCallback } from "react";
+import { AuthContext } from "../context";
+import { authApi } from "../api/auth";
 
 /**
  * AuthProvider
@@ -8,20 +8,22 @@ import { authApi } from '../api/auth';
  */
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
-  const [token, setToken] = useState(() => localStorage.getItem('helpdesk_access_token'));
+  const [token, setToken] = useState(() =>
+    localStorage.getItem("helpdesk_access_token"),
+  );
   const [loading, setLoading] = useState(true);
 
   const handleAuthExpired = useCallback(() => {
-    localStorage.removeItem('helpdesk_access_token');
-    localStorage.removeItem('helpdesk_refresh_token');
+    localStorage.removeItem("helpdesk_access_token");
+    localStorage.removeItem("helpdesk_refresh_token");
     setUser(null);
     setToken(null);
   }, []);
 
   useEffect(() => {
-    window.addEventListener('helpdesk:auth-expired', handleAuthExpired);
+    window.addEventListener("helpdesk:auth-expired", handleAuthExpired);
     return () => {
-      window.removeEventListener('helpdesk:auth-expired', handleAuthExpired);
+      window.removeEventListener("helpdesk:auth-expired", handleAuthExpired);
     };
   }, [handleAuthExpired]);
 
@@ -29,7 +31,7 @@ export function AuthProvider({ children }) {
     let isMounted = true;
 
     async function initAuth() {
-      const storedToken = localStorage.getItem('helpdesk_access_token');
+      const storedToken = localStorage.getItem("helpdesk_access_token");
       if (!storedToken) {
         if (isMounted) {
           setLoading(false);
@@ -44,7 +46,7 @@ export function AuthProvider({ children }) {
           setToken(storedToken);
         }
       } catch (err) {
-        console.warn('Session verification failed:', err.message);
+        console.warn("Session verification failed:", err.message);
         if (isMounted) {
           handleAuthExpired();
         }
@@ -67,9 +69,9 @@ export function AuthProvider({ children }) {
     const { access, refresh, user: userData } = data;
 
     if (access) {
-      localStorage.setItem('helpdesk_access_token', access);
+      localStorage.setItem("helpdesk_access_token", access);
       if (refresh) {
-        localStorage.setItem('helpdesk_refresh_token', refresh);
+        localStorage.setItem("helpdesk_refresh_token", refresh);
       }
       setToken(access);
       setUser(userData);
@@ -78,11 +80,14 @@ export function AuthProvider({ children }) {
   }, []);
 
   const logout = useCallback(async () => {
-    const refreshToken = localStorage.getItem('helpdesk_refresh_token');
+    const refreshToken = localStorage.getItem("helpdesk_refresh_token");
     try {
       await authApi.logout(refreshToken);
     } catch (err) {
-      console.warn('Logout API call failed, clearing local state anyway:', err.message);
+      console.warn(
+        "Logout API call failed, clearing local state anyway:",
+        err.message,
+      );
     } finally {
       handleAuthExpired();
     }
@@ -93,9 +98,9 @@ export function AuthProvider({ children }) {
     const { access, refresh, user: userData } = data;
 
     if (access) {
-      localStorage.setItem('helpdesk_access_token', access);
+      localStorage.setItem("helpdesk_access_token", access);
       if (refresh) {
-        localStorage.setItem('helpdesk_refresh_token', refresh);
+        localStorage.setItem("helpdesk_refresh_token", refresh);
       }
       setToken(access);
       setUser(userData);
@@ -104,8 +109,8 @@ export function AuthProvider({ children }) {
   }, []);
 
   const isAuthenticated = Boolean(token && user);
-  const isAdmin = user?.role === 'admin';
-  const isUser = user?.role === 'user';
+  const isAdmin = user?.role === "admin";
+  const isUser = user?.role === "user";
 
   const value = {
     user,
@@ -119,9 +124,5 @@ export function AuthProvider({ children }) {
     logout,
   };
 
-  return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

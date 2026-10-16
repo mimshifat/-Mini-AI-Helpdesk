@@ -1,32 +1,41 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { ArrowLeft, Edit3, Trash2, Calendar, User as UserIcon } from 'lucide-react';
-import { useAuth } from '../../hooks';
-import { Button } from '../common/Button';
-import { StatusBadge, PriorityBadge, CategoryBadge, RoleBadge } from '../common/Badge';
+import React from "react";
+import { Link } from "react-router-dom";
+import {
+  ArrowLeft,
+  Edit3,
+  Trash2,
+  Calendar,
+  User as UserIcon,
+} from "lucide-react";
+import { useAuth } from "../../hooks";
+import { Button } from "../common/Button";
+import {
+  StatusBadge,
+  PriorityBadge,
+  CategoryBadge,
+  RoleBadge,
+} from "../common/Badge";
 
-export function TicketHeader({
-  ticket,
-  canEdit,
-  canDelete,
-  onEdit,
-  onDelete,
-}) {
+export function TicketHeader({ ticket, canEdit, canDelete, onEdit, onDelete }) {
   const { user, isAdmin } = useAuth();
-  const creatorFullName = [ticket.creator?.first_name, ticket.creator?.last_name]
+  const creatorFullName = [
+    ticket.creator?.first_name,
+    ticket.creator?.last_name,
+  ]
     .filter(Boolean)
-    .join(' ')
+    .join(" ")
     .trim();
   const creatorDisplayName =
     creatorFullName ||
     ticket.creator_name ||
     ticket.creator?.username ||
     ticket.creator_username ||
-    'Unknown';
-  const creatorUsername = ticket.creator?.username || ticket.creator_username || 'Unknown';
+    "Unknown";
+  const creatorUsername =
+    ticket.creator?.username || ticket.creator_username || "Unknown";
   const isSelf = Boolean(
     (user?.id && ticket.creator?.id && user.id === ticket.creator.id) ||
-    (user?.username && creatorUsername && user.username === creatorUsername)
+    (user?.username && creatorUsername && user.username === creatorUsername),
   );
   return (
     <div className="space-y-4">
@@ -43,7 +52,9 @@ export function TicketHeader({
       <div className="p-6 sm:p-8 bg-white border border-slate-200/80 rounded-3xl shadow-xs space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="text-xs font-bold text-slate-400">#{ticket.id}</span>
+            <span className="text-xs font-bold text-slate-400">
+              #{ticket.id}
+            </span>
             <StatusBadge status={ticket.status} />
             <CategoryBadge category={ticket.category} />
             <PriorityBadge priority={ticket.priority} />
@@ -85,7 +96,7 @@ export function TicketHeader({
         <div className="flex flex-wrap items-center gap-4 text-xs text-slate-500 pt-1 border-t border-slate-100">
           <span className="flex items-center gap-1.5">
             <UserIcon className="w-3.5 h-3.5 text-slate-400" />
-            Submitted by{' '}
+            Submitted by{" "}
             <strong className="text-slate-800">
               {isSelf ? `You (${creatorDisplayName})` : creatorDisplayName}
             </strong>
@@ -94,10 +105,11 @@ export function TicketHeader({
 
           <span className="flex items-center gap-1.5">
             <Calendar className="w-3.5 h-3.5 text-slate-400" />
-            Created {new Date(ticket.created_at).toLocaleDateString(undefined, {
-              month: 'short',
-              day: 'numeric',
-              year: 'numeric',
+            Created{" "}
+            {new Date(ticket.created_at).toLocaleDateString(undefined, {
+              month: "short",
+              day: "numeric",
+              year: "numeric",
             })}
           </span>
 

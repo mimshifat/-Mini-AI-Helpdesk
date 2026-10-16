@@ -1,9 +1,9 @@
-import React from 'react';
-import { Sparkles } from 'lucide-react';
-import { Input } from '../common/Input';
-import { Textarea } from '../common/Textarea';
-import { Select } from '../common/Select';
-import { Button } from '../common/Button';
+import React from "react";
+import { Sparkles } from "lucide-react";
+import { Input } from "../common/Input";
+import { Textarea } from "../common/Textarea";
+import { Select } from "../common/Select";
+import { Button } from "../common/Button";
 
 export function TicketForm({
   title,
@@ -50,7 +50,8 @@ export function TicketForm({
         <div className="flex items-center gap-2.5">
           <Sparkles className="w-4 h-4 text-purple-600 shrink-0" />
           <span className="text-xs text-purple-900 font-medium">
-            Let AI analyze your subject & description to suggest the optimal Category and Priority.
+            Let AI analyze your subject & description to suggest the optimal
+            Category and Priority.
           </span>
         </div>
 
@@ -63,7 +64,7 @@ export function TicketForm({
           icon={Sparkles}
           className="text-xs shrink-0 font-bold text-purple-700 bg-white hover:bg-purple-50 border-purple-200"
         >
-          {aiLoading ? 'Analyzing...' : 'AI Auto-Triage'}
+          {aiLoading ? "Analyzing..." : "AI Auto-Triage"}
         </Button>
       </div>
 

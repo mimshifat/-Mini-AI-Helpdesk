@@ -1,12 +1,18 @@
-import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { Clock, User as UserIcon, Inbox } from 'lucide-react';
-import { Card } from '../common/Card';
-import { StatusBadge, PriorityBadge, CategoryBadge } from '../common/Badge';
-import { TableRowSkeleton } from '../common/Skeleton';
-import { EmptyState } from '../common/EmptyState';
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Clock, User as UserIcon, Inbox } from "lucide-react";
+import { Card } from "../common/Card";
+import { StatusBadge, PriorityBadge, CategoryBadge } from "../common/Badge";
+import { TableRowSkeleton } from "../common/Skeleton";
+import { EmptyState } from "../common/EmptyState";
 
-export function TicketTable({ tickets, loading, isAdmin, hasActiveFilters, onResetFilters }) {
+export function TicketTable({
+  tickets,
+  loading,
+  isAdmin,
+  hasActiveFilters,
+  onResetFilters,
+}) {
   const navigate = useNavigate();
   return (
     <Card className="border border-slate-200/80 overflow-hidden shadow-xs">
@@ -36,13 +42,17 @@ export function TicketTable({ tickets, loading, isAdmin, hasActiveFilters, onRes
                 <td colSpan={isAdmin ? 6 : 5} className="py-16 text-center">
                   <EmptyState
                     icon={Inbox}
-                    title={hasActiveFilters ? 'No matching tickets' : 'No tickets submitted yet'}
+                    title={
+                      hasActiveFilters
+                        ? "No matching tickets"
+                        : "No tickets submitted yet"
+                    }
                     description={
                       hasActiveFilters
-                        ? 'Try loosening your search terms or clearing your filter criteria.'
-                        : 'Create a new support ticket using the button above to begin.'
+                        ? "Try loosening your search terms or clearing your filter criteria."
+                        : "Create a new support ticket using the button above to begin."
                     }
-                    actionLabel={hasActiveFilters ? 'Reset Filters' : undefined}
+                    actionLabel={hasActiveFilters ? "Reset Filters" : undefined}
                     onAction={hasActiveFilters ? onResetFilters : undefined}
                   />
                 </td>
@@ -80,7 +90,10 @@ export function TicketTable({ tickets, loading, isAdmin, hasActiveFilters, onRes
                     <td className="py-4 px-4 whitespace-nowrap text-xs text-slate-600">
                       <span className="flex items-center gap-1.5 font-medium">
                         <UserIcon className="w-3.5 h-3.5 text-slate-400" />
-                        {t.creator_name || t.creator?.username || t.creator_username || 'Unknown'}
+                        {t.creator_name ||
+                          t.creator?.username ||
+                          t.creator_username ||
+                          "Unknown"}
                       </span>
                     </td>
                   )}
@@ -88,10 +101,10 @@ export function TicketTable({ tickets, loading, isAdmin, hasActiveFilters, onRes
                     <span className="flex items-center justify-end gap-1">
                       <Clock className="w-3.5 h-3.5 text-slate-400" />
                       {new Date(t.updated_at).toLocaleDateString(undefined, {
-                        month: 'short',
-                        day: 'numeric',
-                        hour: '2-digit',
-                        minute: '2-digit',
+                        month: "short",
+                        day: "numeric",
+                        hour: "2-digit",
+                        minute: "2-digit",
                       })}
                     </span>
                   </td>
