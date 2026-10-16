@@ -33,7 +33,7 @@ A clean, modern, and reliable Full-Stack Support & Ticket Management system with
 ## 🏗️ Architecture & Technology Stack
 
 ```
-f:\Nt Innovation\
+mini-ai-helpdesk/
 ├── backend/                  # Django REST Framework Backend
 │   ├── core/                 # Django settings, JWT configuration & root URL router
 │   ├── accounts/             # Custom User model, JWT views (login, refresh, logout, me) & test suite
