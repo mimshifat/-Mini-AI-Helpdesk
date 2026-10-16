@@ -7,7 +7,6 @@ import {
   User as UserIcon, 
   Mail,
   AlertCircle, 
-  CheckCircle2,
   ArrowRight,
   Eye,
   EyeOff

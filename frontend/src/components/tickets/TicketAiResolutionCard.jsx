@@ -9,8 +9,7 @@ import {
   Meh, 
   AlertTriangle,
   Send,
-  Edit3,
-  CheckCircle2
+  Edit3
 } from 'lucide-react';
 import { Card } from '../common/Card';
 import { Button } from '../common/Button';
