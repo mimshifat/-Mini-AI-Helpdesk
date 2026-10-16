@@ -4,7 +4,7 @@ on:
   schedule:
     # Run every 14 minutes (Render free tier sleeps after 15 minutes of inactivity)
     - cron: '*/14 * * * *'
-  workflow_dispatch: # Allows manual trigger from GitHub Actions tab
+  workflow_dispatch: # Allows manual trigger anytime from GitHub Actions tab
 
 jobs:
   ping-backend:
@@ -13,14 +13,7 @@ jobs:
     steps:
       - name: Ping Health Endpoint
         run: |
-          # Priority: GitHub Secret -> GitHub Repo Variable -> Default URL placeholder
-          TARGET_URL="${{ secrets.RENDER_BACKEND_URL || vars.RENDER_BACKEND_URL }}"
-          
-          if [ -z "$TARGET_URL" ]; then
-            echo "::warning ::RENDER_BACKEND_URL is not set in GitHub Secrets/Variables. Please add your Render URL in GitHub Repo Settings -> Secrets and variables -> Actions."
-            exit 0
-          fi
-          
+          TARGET_URL="${{ secrets.RENDER_BACKEND_URL || vars.RENDER_BACKEND_URL || 'https://mini-ai-helpdesk.onrender.com/health/' }}"
           echo "Pinging backend at: $TARGET_URL"
           RESPONSE=$(curl -s -w "\nHTTP_STATUS:%{http_code}\n" --max-time 30 "$TARGET_URL")
           echo "$RESPONSE"
