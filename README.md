@@ -68,6 +68,7 @@ mini-ai-helpdesk/
 │   ├── tailwind.config.js    # Custom brand tokens, fonts, and animations
 │   ├── vite.config.js
 │   ├── package.json
+│   ├── vercel.json           # Vercel SPA rewrite configuration (prevents 404 on page reload)
 │   └── .env.example          # Frontend environment template
 │
 ├── .gitignore                # Comprehensive exclusions (venv, node_modules, .env, logs)
@@ -309,3 +310,4 @@ npm run build
 - **Cross-Origin Resource Sharing (CORS)**: Configured specifically for trusted frontend origins.
 - **Object-Level Permissions**: Regular users receive `404 Not Found` when requesting tickets outside their ownership to avoid data enumeration.
 - **Fail-Safe AI**: AI calls are wrapped in service-level timeouts and structured fallback handlers, ensuring the application remains 100% operational regardless of third-party API availability.
+- **Single Page Application (SPA) Routing on Vercel**: Configured with `frontend/vercel.json` (`"source": "/(.*)", "destination": "/index.html"`) so direct page reloads on client routes (e.g. `/login`, `/tickets`, `/dashboard`) seamlessly resolve without 404 errors.
